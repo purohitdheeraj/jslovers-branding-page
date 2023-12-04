@@ -2,7 +2,7 @@ const { Octokit } = require("@octokit/rest");
 const fs = require("fs").promises;
 const path = require("path");
 
-// Use environment variable for GitHub token
+// Use environment variable for token
 const octokit = new Octokit({
 	auth: process.env.GITHUB_TOKEN,
 });
