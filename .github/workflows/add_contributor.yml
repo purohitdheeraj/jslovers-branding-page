@@ -1,30 +1,23 @@
-name: Add Contributor Workflow
-
+name: Add contributors
 on:
+  schedule:
+    - cron:  '20 20 * * *'
   push:
-    branches:
-      - main
+    branches: 
+      - master
 
 jobs:
-  add-contributor:
+  add-contributors:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Node.js Script
-        run: |
-          node .github/script.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_OWNER: ${{ github.event.repository.owner.login }} # Updated to use GitHub event data
-          REPO_NAME: ${{ github.event.repository.name }} # Updated to use GitHub event data
+    - uses: actions/checkout@v2
+    - uses: BobAnkh/add-contributors@master
+      with:
+        CONTRIBUTOR: '### Contributors'
+        COLUMN_PER_ROW: '6'
+        ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        IMG_WIDTH: '100'
+        FONT_SIZE: '14'
+        PATH: '/README.md'
+        COMMIT_MESSAGE: 'docs(README): update contributors'
+        AVATAR_SHAPE: 'round'
